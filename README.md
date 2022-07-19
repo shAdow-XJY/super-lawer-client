@@ -8,6 +8,6 @@ super-lawer-client flutter
 
 1.开发平台 Pixel 3a
 
-2.开发环境 Android API 30
+2.开发环境 Android API 31
 
 3.运行命令 flutter run --no-sound-null-safety

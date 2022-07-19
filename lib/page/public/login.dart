@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     RResponse r = await LoginService.login(_userID, _password);
     Navigator.pop(context);
     if (r.code != 1) {
-      this.setState(() {
+      setState(() {
         errMsg = r.message;
       });
     } else {
