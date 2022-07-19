@@ -44,7 +44,7 @@ class _AuthPageState extends State<AuthDetailPage> {
     RResponse rResponse = await AdminService.getAuthDetail(
         widget.arguments['id'], widget.arguments['auth_type']);
     response = rResponse;
-    this.setState(() {
+    setState(() {
       if (rResponse.data["auth_type"] == "enterprise") {
         type = 1;
       } else if (rResponse.data["auth_type"] == "lawer") {
@@ -64,12 +64,10 @@ class _AuthPageState extends State<AuthDetailPage> {
       case 2:
         return _LawerWidget();
       default:
-        return Container(
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text("认证详情"),
-              backgroundColor: Colors.orange.withOpacity(0.3),
-            ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("认证详情"),
+            backgroundColor: Colors.orange.withOpacity(0.3),
           ),
         );
     }
@@ -81,20 +79,20 @@ class _AuthPageState extends State<AuthDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
+          title: const Text('提示'),
+          content: Text(message),
           actions: <Widget>[
             FlatButton(
               color: Colors.grey,
               highlightColor: Colors.blue[700],
               colorBrightness: Brightness.dark,
               splashColor: Colors.grey,
-              child: Text("确定"),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text("确定"),
             ),
           ],
         );
@@ -104,7 +102,7 @@ class _AuthPageState extends State<AuthDetailPage> {
 
   _LawerWidget() {
     List<Widget> _list = [];
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 15,
     ));
 
@@ -113,12 +111,12 @@ class _AuthPageState extends State<AuthDetailPage> {
         message: "申请人",
         widget: Text(
           widget.arguments['nick_name'],
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
 
     _list.add(ListItem(
         message: "认证类型",
-        widget: Text(
+        widget: const Text(
           "律师",
           style: TextStyle(fontSize: 17),
         )));
@@ -127,53 +125,53 @@ class _AuthPageState extends State<AuthDetailPage> {
         message: "认证申请时间",
         widget: Text(
           lawerAuth.authTime!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
 
     _list.add(ListItem(
         message: "姓名",
         widget: Text(
           lawerAuth.realName!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "性别",
         widget: Text(
           lawerAuth.sex!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "身份证号",
         widget: Text(
           lawerAuth.idNumber!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
-    _list.add(ListItem(message: "身份证正面:", widget: Text("")));
+    _list.add(ListItem(message: "身份证正面:", widget: const Text("")));
     _list.add(Image.network(
       lawerAuth.idcardFrontUrl!,
       width: transferWidth(250),
       height: transferlength(250),
       fit: BoxFit.contain,
     ));
-    _list.add(ListItem(message: "身份证背面:", widget: Text("")));
+    _list.add(ListItem(message: "身份证背面:", widget: const Text("")));
     _list.add(Image.network(
       lawerAuth.idcardBackUrl!,
       width: transferWidth(250),
       height: transferlength(250),
       fit: BoxFit.contain,
     ));
-    _list.add(ListItem(message: "律师营业资格证:", widget: Text("")));
+    _list.add(ListItem(message: "律师营业资格证:", widget: const Text("")));
     _list.add(Image.network(
       lawerAuth.businessLicenseUrl!,
       width: transferWidth(250),
       height: transferlength(250),
       fit: BoxFit.contain,
     ));
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 50,
     ));
     _list.add(Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Container(
+      SizedBox(
         width: transferWidth(MediaQuery.of(context).size.width / 3),
         height: transferlength(45),
         child: RaisedButton(
@@ -196,15 +194,15 @@ class _AuthPageState extends State<AuthDetailPage> {
               Navigator.pop(context);
             }
           },
-          shape: StadiumBorder(side: BorderSide.none),
+          shape: const StadiumBorder(side: BorderSide.none),
           color: Colors.red.withOpacity(0.8),
-          child: Text(
+          child: const Text(
             '拒绝',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ),
       ),
-      Container(
+      SizedBox(
         width: transferWidth(MediaQuery.of(context).size.width / 3),
         height: transferlength(45),
         child: RaisedButton(
@@ -227,9 +225,9 @@ class _AuthPageState extends State<AuthDetailPage> {
               Navigator.pop(context);
             }
           },
-          shape: StadiumBorder(side: BorderSide.none),
+          shape: const StadiumBorder(side: BorderSide.none),
           color: Colors.green.withOpacity(0.7),
-          child: Text(
+          child: const Text(
             '同意认证',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
@@ -237,24 +235,23 @@ class _AuthPageState extends State<AuthDetailPage> {
       )
     ]));
 
-    return Container(
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.orange.withOpacity(0.5),
-              brightness: Brightness.light,
-              title: Text('认证信息'),
-            ),
-            body: ListView.builder(
-                itemCount: _list
-                    .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
-                itemBuilder: (content, index) {
-                  return _list[index];
-                })));
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.orange.withOpacity(0.5),
+          brightness: Brightness.light,
+          title: const Text('认证信息'),
+        ),
+        body: ListView.builder(
+            itemCount: _list
+                .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
+            itemBuilder: (content, index) {
+              return _list[index];
+            }));
   }
 
   _EnterpeiseWidget() {
     List<Widget> _list = [];
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 15,
     ));
     EnterpeiseAuth enterpeiseAuth = response.data["enterpeise"];
@@ -262,11 +259,11 @@ class _AuthPageState extends State<AuthDetailPage> {
         message: "申请人",
         widget: Text(
           widget.arguments['nick_name'],
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "认证类型",
-        widget: Text(
+        widget: const Text(
           "企业",
           style: TextStyle(fontSize: 17),
         )));
@@ -275,39 +272,39 @@ class _AuthPageState extends State<AuthDetailPage> {
         message: "认证申请时间",
         widget: Text(
           enterpeiseAuth.authTime!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
 
     _list.add(ListItem(
         message: "企业名称",
         widget: Text(
           enterpeiseAuth.enterpriseName!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "企业地址",
         widget: Text(
           enterpeiseAuth.enterpriseAdd!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "企业代码",
         widget: Text(
           enterpeiseAuth.institutionCode!,
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
-    _list.add(ListItem(message: "企业经营执照:", widget: Text("")));
+    _list.add(ListItem(message: "企业经营执照:", widget: const Text("")));
     _list.add(Image.network(
       enterpeiseAuth.businessLicenseUrl!,
       width: transferWidth(250),
       height: transferlength(250),
       fit: BoxFit.contain,
     ));
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 50,
     ));
     _list.add(Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Container(
+      SizedBox(
         width: transferWidth(MediaQuery.of(context).size.width / 3),
         height: transferlength(45),
         child: RaisedButton(
@@ -330,15 +327,15 @@ class _AuthPageState extends State<AuthDetailPage> {
               Navigator.pop(context);
             }
           },
-          shape: StadiumBorder(side: BorderSide.none),
+          shape: const StadiumBorder(side: BorderSide.none),
           color: Colors.red.withOpacity(0.8),
-          child: Text(
+          child: const Text(
             '拒绝',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ),
       ),
-      Container(
+      SizedBox(
         width: transferWidth(MediaQuery.of(context).size.width / 3),
         height: transferlength(45),
         child: RaisedButton(
@@ -361,27 +358,26 @@ class _AuthPageState extends State<AuthDetailPage> {
               Navigator.pop(context);
             }
           },
-          shape: StadiumBorder(side: BorderSide.none),
+          shape: const StadiumBorder(side: BorderSide.none),
           color: Colors.green.withOpacity(0.7),
-          child: Text(
+          child: const Text(
             '同意认证',
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
         ),
       )
     ]));
-    return Container(
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.orange.withOpacity(0.3),
-              brightness: Brightness.light,
-              title: Text('认证信息'),
-            ),
-            body: ListView.builder(
-                itemCount: _list
-                    .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
-                itemBuilder: (content, index) {
-                  return _list[index];
-                })));
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.orange.withOpacity(0.3),
+          brightness: Brightness.light,
+          title: const Text('认证信息'),
+        ),
+        body: ListView.builder(
+            itemCount: _list
+                .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
+            itemBuilder: (content, index) {
+              return _list[index];
+            }));
   }
 }
