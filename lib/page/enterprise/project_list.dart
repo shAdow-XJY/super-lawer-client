@@ -15,33 +15,33 @@ class ProjectListPage extends StatefulWidget {
 
 class _ProjectPageState extends State<ProjectListPage> {
   String _filter = "全部";
-  List<Widget> _list = [];
+  final List<Widget> _list = [];
 
   @override
   void initState() {
     super.initState();
     getProjectData();
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 10,
     ));
     _list.add(
       Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
+          const Text(
             "筛选",
             style: TextStyle(fontSize: 20),
           ),
           PopupMenuButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.keyboard_arrow_down,
               size: 30,
             ),
             onSelected: (value) {
-              this.setState(() {
+              setState(() {
                 _filter = value.toString();
 
-                print(_filter);
+                debugPrint(_filter);
                 getProjectData();
               });
             },
@@ -138,7 +138,7 @@ class _ProjectPageState extends State<ProjectListPage> {
     }
     RResponse rResponse = await EnterpeiseService.listProjects(filter);
     if (rResponse.code == 1 && mounted) {
-      this.setState(() {
+      setState(() {
         _list.removeRange(2, _list.length);
         for (var item in rResponse.data['projects']) {
           _list.add(_ListItem(
@@ -157,7 +157,7 @@ class _ProjectPageState extends State<ProjectListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: _FloatingButton(),
+        floatingActionButton: const _FloatingButton(),
         body: ListView.builder(
             itemCount: _list
                 .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
@@ -176,12 +176,12 @@ class _FloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 15.0, bottom: 20),
-      child: Container(
+      child: SizedBox(
         height: transferlength(70),
         width: transferWidth(70),
         child: FloatingActionButton(
           backgroundColor: Colors.orange.withOpacity(0.7),
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 30,
           ),
@@ -210,20 +210,20 @@ class _ListItem extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.circle,
               size: 30,
             ),
             title: Text(
               title,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             subtitle: Text(
-              "申请时间: " + subtitle,
-              style: TextStyle(fontSize: 15),
+              "申请时间: $subtitle",
+              style: const TextStyle(fontSize: 15),
             ),
           ),
-          Divider()
+          const Divider()
         ],
       ),
     );

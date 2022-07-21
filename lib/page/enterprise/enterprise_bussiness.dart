@@ -29,14 +29,14 @@ class _EnterpriseBussinessPageState extends State<EnterpriseBussinessPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xfffbfbfb),
+        backgroundColor: const Color(0xfffbfbfb),
         title: _TitleTabBar(
-          tabController: this._tabController,
+          tabController: _tabController,
         ),
       ),
       body: TabBarView(
-        children: _tabContent,
         controller: _tabController,
+        children: _tabContent,
       ),
     );
   }
@@ -64,21 +64,21 @@ class __TitleTabBarState extends State<_TitleTabBar> {
         Expanded(
           child: TabBar(
             unselectedLabelColor: Colors.grey, //设置未选中时的字体颜色，tabs里面的字体样式优先级最高
-            unselectedLabelStyle: TextStyle(
+            unselectedLabelStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400), //设置未选中时的字体样式，tabs里面的字体样式优先级最高
             labelColor: Colors.black, //设置选中时的字体颜色，tabs里面的字体样式优先级最高
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.w600), //设置选中时的字体样式，tabs里面的字体样式优先级最高
-            labelPadding: EdgeInsets.symmetric(horizontal: 16),
+            labelPadding: const EdgeInsets.symmetric(horizontal: 16),
             indicatorColor: Colors.white,
             tabs: _tabs,
             isScrollable: true,
             controller: widget.tabController,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 30,
         ),
       ],
@@ -87,12 +87,12 @@ class __TitleTabBarState extends State<_TitleTabBar> {
 }
 
 List<Tab> _tabs = [
-  Tab(
+  const Tab(
     text: '法律咨询',
   ),
-  Tab(
+  const Tab(
     text: '案件管理',
   ),
 ];
 
-List<Widget> _tabContent = [ProjectListPage(), AuthPage()];
+List<Widget> _tabContent = [const ProjectListPage(), const AuthPage()];

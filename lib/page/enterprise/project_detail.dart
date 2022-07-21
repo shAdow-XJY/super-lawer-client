@@ -36,7 +36,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         _image = File(pickedFile.path);
         _visible = true;
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     });
   }
@@ -44,7 +44,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   @override
   void initState() {
     super.initState();
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 20,
     ));
     _getDetail();
@@ -57,9 +57,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     if (rResponse.code == 1) {
       _list.removeRange(1, _list.length);
       Map r = rResponse.data['proj_detail'];
-      this.setState(() {
+      setState(() {
         _list.add(ListItem(message: "项目名称", widget: Text(r["project_name"])));
-        _list.add(ListItem(message: "项目类型", widget: Text('法律咨询')));
+        _list.add(ListItem(message: "项目类型", widget: const Text('法律咨询')));
         _list.add(ListItem(
           message: "申请人",
           widget: InkWell(
@@ -73,7 +73,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             child: Text(
               r['from_name'],
               style:
-                  TextStyle(color: Colors.blue, letterSpacing: 3, fontSize: 18),
+                  const TextStyle(color: Colors.blue, letterSpacing: 3, fontSize: 18),
             ),
           ),
         ));
@@ -90,7 +90,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   },
                   child: Text(
                     "${r["lawer"]['real_name']}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.blue, letterSpacing: 3, fontSize: 18),
                   ))));
         }
@@ -104,7 +104,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             message: "服务方案",
             widget: InkWell(
               onTap: () {
-                this.setState(() {
+                setState(() {
                   _show = !_show;
                 });
               },
@@ -123,7 +123,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   ServiceListItem(
                     message: "服务等级",
                     widget: Text(
-                      "${r['service']['rank']}",
+                      "${r['service']['level']}",
                     ),
                   ),
                   ServiceListItem(
@@ -162,11 +162,11 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             break;
         }
         _list.add(ListItem(message: "项目状态", widget: Text(status)));
-        _list.add(ListItem(message: "项目具体内容", widget: Text("")));
+        _list.add(ListItem(message: "项目具体内容", widget: const Text("")));
         _list.add(Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
@@ -180,19 +180,19 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         ));
         _list.add(ListItem(
             message: "项目文档",
-            widget: InkWell(child: Icon(Icons.arrow_forward_ios))));
+            widget: const InkWell(child: Icon(Icons.arrow_forward_ios))));
 
         if (r['status'] == 2 || r['status'] == 3) {
           _list.add(ListItem(
               message: "项目费用",
               widget: Text("${r["total_money"].toString()}元")));
           _list.add(ListItem(
-              message: "是否支付", widget: Text("${r["is_payment"] ? '是' : '否'}")));
+              message: "是否支付", widget: Text(r["is_payment"] ? '是' : '否')));
           if (r["pay_picture_url"] != null && r["pay_picture_url"].length > 0) {
             _list.add(ListItem(
                 message: "支付状态",
-                widget: Text("${r["is_payment"] ? '审核通过' : '待审核'}")));
-            _list.add(ListItem(message: "支付证明:", widget: Text("")));
+                widget: Text(r["is_payment"] ? '审核通过' : '待审核')));
+            _list.add(ListItem(message: "支付证明:", widget: const Text("")));
             _list.add(Image.network(
               r['pay_picture_url'],
               width: transferWidth(250),
@@ -200,7 +200,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
               fit: BoxFit.contain,
             ));
           } else {
-            _list.add(SizedBox(
+            _list.add(const SizedBox(
               height: 20,
             ));
             _list.add(Container(
@@ -236,15 +236,15 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     }
                   }
                 },
-                shape: StadiumBorder(side: BorderSide.none),
+                shape: const StadiumBorder(side: BorderSide.none),
                 color: Colors.orange,
                 child: Text(
                   _visible ? '提交' : '上传支付证明',
-                  style: TextStyle(color: Colors.white, fontSize: 15),
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ),
             ));
-            _list.add(SizedBox(
+            _list.add(const SizedBox(
               height: 30,
             ));
           }
@@ -258,7 +258,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     _getDetail();
     return Scaffold(
         appBar: AppBar(
-          title: Text("项目详情"),
+          title: const Text("项目详情"),
           backgroundColor: Colors.orange.withOpacity(0.5),
         ),
         body: ListView.builder(
@@ -275,20 +275,20 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
+          title: const Text('提示'),
+          content: Text(message),
           actions: <Widget>[
             FlatButton(
               color: Colors.grey,
               highlightColor: Colors.blue[700],
               colorBrightness: Brightness.dark,
               splashColor: Colors.grey,
-              child: Text("确定"),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text("确定"),
             ),
           ],
         );

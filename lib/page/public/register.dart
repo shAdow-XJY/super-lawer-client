@@ -10,6 +10,8 @@ import 'package:super_lawer/service/file_service.dart';
 import 'package:super_lawer/service/login_service.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../common/show_message_dialog.dart';
+
 class RegisterPage extends StatefulWidget {
   @override
   _Registerpage createState() => _Registerpage();
@@ -34,33 +36,6 @@ class _Registerpage extends State<RegisterPage> {
   // 密码显示、隐藏
   bool _isObscure = true;
   Color _eyeColor = Colors.grey;
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -119,7 +94,7 @@ class _Registerpage extends State<RegisterPage> {
         RResponse response = await LoginService.sendCheckCode(_email);
         Navigator.pop(context);
         if (response.code != 1) {
-          _showMessageDialog(response.message);
+          showMessageDialog(response.message,context);
         }
         setState(() {
           isButtonEnable = false; //按钮状态标记
@@ -172,7 +147,7 @@ class _Registerpage extends State<RegisterPage> {
       }
       // 注册成功 转跳到登陆页面
       else {
-        _showMessageDialog(r.message);
+        showMessageDialog(r.message,context);
       }
     }
   }

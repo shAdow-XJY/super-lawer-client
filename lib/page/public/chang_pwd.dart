@@ -10,49 +10,24 @@ import 'package:super_lawer/service/file_service.dart';
 import 'package:super_lawer/service/login_service.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../common/show_message_dialog.dart';
+
 class ChangePwdPage extends StatefulWidget {
   Map arguments;
   ChangePwdPage({Key? key, required this.arguments}) : super(key: key);
 
   @override
-  _ChangePwdPage createState() => new _ChangePwdPage();
+  _ChangePwdPage createState() => _ChangePwdPage();
 }
 
 class _ChangePwdPage extends State<ChangePwdPage> {
-  GlobalKey<FormState> _passport_form_key = new GlobalKey<FormState>();
+  final GlobalKey<FormState> _passport_form_key = GlobalKey<FormState>();
   String _passport = '';
   String _rpassport = '';
 
   // 密码显示、隐藏
   bool _isObscure = true;
   Color _eyeColor = Colors.grey;
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              child: Text("确定"),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -64,7 +39,7 @@ class _ChangePwdPage extends State<ChangePwdPage> {
     if (phoneform!.validate()) {
       phoneform.save();
       if (_passport != _rpassport) {
-        _showMessageDialog("两次输入的密码不一致,请重试");
+        showMessageDialog("两次输入的密码不一致,请重试",context);
         phoneform.reset();
         return;
       }
@@ -73,7 +48,7 @@ class _ChangePwdPage extends State<ChangePwdPage> {
           passport: widget.arguments["passport"], pwd: _passport);
       Navigator.pop(context);
       if (rResponse.code != 1) {
-        _showMessageDialog(rResponse.message);
+        showMessageDialog(rResponse.message,context);
       } else {
         Fluttertoast.showToast(
             msg: "密码修改成功",
@@ -90,10 +65,10 @@ class _ChangePwdPage extends State<ChangePwdPage> {
 
   @override
   Widget build(BuildContext context) {
-    final password = new TextFormField(
+    final password = TextFormField(
       autofocus: false,
       initialValue: '',
-      onSaved: (val) => this._passport = val!,
+      onSaved: (val) => _passport = val!,
       obscureText: _isObscure,
       validator: (value) {
         if (value!.length < 6 || value.length > 16) {
@@ -102,11 +77,11 @@ class _ChangePwdPage extends State<ChangePwdPage> {
           return null;
         }
       },
-      decoration: new InputDecoration(
+      decoration: InputDecoration(
         hintText: '密码',
-        contentPadding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border:
-            new OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
         suffixIcon: IconButton(
             icon: Icon(
               Icons.remove_red_eye,
@@ -122,10 +97,10 @@ class _ChangePwdPage extends State<ChangePwdPage> {
             }),
       ),
     );
-    final rpassword = new TextFormField(
+    final rpassword = TextFormField(
       autofocus: false,
       initialValue: '',
-      onSaved: (val) => this._rpassport = val!,
+      onSaved: (val) => _rpassport = val!,
       obscureText: _isObscure,
       validator: (value) {
         if (value!.length < 6 || value.length > 16) {
@@ -134,60 +109,59 @@ class _ChangePwdPage extends State<ChangePwdPage> {
           return null;
         }
       },
-      decoration: new InputDecoration(
+      decoration: InputDecoration(
         hintText: '密码',
-        contentPadding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border:
-            new OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
-    return Container(
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.orange,
-              brightness: Brightness.light,
-              title: Text('修改密码'),
-            ),
-            body: Container(
-                padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 8,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      child: new Form(
-                        key: _passport_form_key,
-                        child: Column(
-                          children: [
-                            password,
-                            SizedBox(
-                              height: 10,
-                            ),
-                            rpassword
-                          ],
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.orange,
+          brightness: Brightness.light,
+          title: const Text('修改密码'),
+        ),
+        body: Container(
+            padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 8,
+                ),
+                Container(
+                  color: Colors.white,
+                  child: Form(
+                    key: _passport_form_key,
+                    child: Column(
+                      children: [
+                        password,
+                        const SizedBox(
+                          height: 10,
                         ),
-                      ),
+                        rpassword
+                      ],
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 45,
-                      margin: EdgeInsets.only(top: 50),
-                      child: RaisedButton(
-                        onPressed: () {
-                          onsubmit();
-                        },
-                        shape: StadiumBorder(side: BorderSide.none),
-                        color: Color(0xff44c5fe),
-                        child: Text(
-                          '确认修改',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ),
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 45,
+                  margin: const EdgeInsets.only(top: 50),
+                  child: RaisedButton(
+                    onPressed: () {
+                      onsubmit();
+                    },
+                    shape: const StadiumBorder(side: BorderSide.none),
+                    color: const Color(0xff44c5fe),
+                    child: const Text(
+                      '确认修改',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
-                  ],
-                ))));
+                  ),
+                ),
+              ],
+            )));
   }
 }

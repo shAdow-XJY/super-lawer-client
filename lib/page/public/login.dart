@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:super_lawer/common/global_data.dart';
 import 'package:super_lawer/common/loading_diglog.dart';
 import 'package:super_lawer/config/http/http_options.dart';
 import 'package:super_lawer/model/response.dart';
 import 'package:super_lawer/service/login_service.dart';
 import 'package:super_lawer/util/number_util.dart';
+
+import '../../common/show_message_dialog.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -21,10 +22,6 @@ class _LoginPageState extends State<LoginPage> {
 
   IconData _checkIcon = Icons.check_box;
 
-  void _changeFormToLogin() {
-    _formKey.currentState!.reset();
-  }
-
   Future<void> _onLogin() async {
 
     showDialog(
@@ -37,18 +34,18 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!_isChecked) {
       Navigator.pop(context);
-      _showMessageDialog('请勾选用户协议后再试');
+      showMessageDialog('请勾选用户协议后再试',context);
       return;
     }
 
     if (_userID == '') {
       Navigator.pop(context);
-      _showMessageDialog('账号不可为空');
+      showMessageDialog('账号不可为空',context);
       return;
     }
     if (_password == '') {
       Navigator.pop(context);
-      _showMessageDialog('密码不可为空');
+      showMessageDialog('密码不可为空',context);
       return;
     }
 
@@ -72,33 +69,6 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.popAndPushNamed(context, "/admin/index", arguments: r.data);
       }
     }
-  }
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Widget _showPassportInput() {

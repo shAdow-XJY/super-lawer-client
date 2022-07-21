@@ -22,7 +22,7 @@ class HttpRequest {
         headers: {"token": HttpOptions.token},
       );
       // 没有实例 则创建之
-      dio = new Dio(baseOptions);
+      dio = Dio(baseOptions);
       // 添加拦截器
       dio!.interceptors.add(HttpInterceptor());
     }
@@ -46,7 +46,7 @@ class HttpRequest {
     dio!.options.receiveTimeout = receiveTimeout;
     if (headers != null) dio!.options.headers = headers;
     if (interceptors != null && interceptors.isNotEmpty) {
-      dio!.interceptors..addAll(interceptors);
+      dio!.interceptors.addAll(interceptors);
     }
   }
 
@@ -55,7 +55,7 @@ class HttpRequest {
     dio!.options.headers.addAll(headers);
   }
 
-  CancelToken _cancelToken = new CancelToken();
+  CancelToken _cancelToken = CancelToken();
   /*
    * 取消请求
    *

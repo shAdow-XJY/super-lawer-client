@@ -26,7 +26,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
   @override
   void initState() {
     super.initState();
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 20,
     ));
     _getDetail();
@@ -39,9 +39,9 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
     if (rResponse.code == 1) {
       _list.removeRange(1, _list.length);
       Map r = rResponse.data['proj_detail'];
-      this.setState(() {
+      setState(() {
         _list.add(ListItem(message: "项目名称", widget: Text(r["project_name"])));
-        _list.add(ListItem(message: "项目类型", widget: Text('法律咨询')));
+        _list.add(ListItem(message: "项目类型", widget: const Text('法律咨询')));
         _list.add(ListItem(
           message: "申请人",
           widget: InkWell(
@@ -55,7 +55,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
             child: Text(
               r['from_name'],
               style:
-                  TextStyle(color: Colors.blue, letterSpacing: 3, fontSize: 18),
+                  const TextStyle(color: Colors.blue, letterSpacing: 3, fontSize: 18),
             ),
           ),
         ));
@@ -72,7 +72,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
                   },
                   child: Text(
                     "${r["lawer"]['real_name']}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.blue, letterSpacing: 3, fontSize: 18),
                   ))));
         }
@@ -86,7 +86,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
             message: "服务方案",
             widget: InkWell(
               onTap: () {
-                this.setState(() {
+                setState(() {
                   _show = !_show;
                 });
               },
@@ -105,7 +105,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
                   ServiceListItem(
                     message: "服务等级",
                     widget: Text(
-                      "${r['service']['rank']}",
+                      "${r['service']['level']}",
                     ),
                   ),
                   ServiceListItem(
@@ -139,15 +139,15 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
           case 3:
             status = "进行中";
             break;
-          case 3:
+          case 4:
             status = "已结束";
             break;
         }
-        _list.add(ListItem(message: "项目具体内容", widget: Text("")));
+        _list.add(ListItem(message: "项目具体内容", widget: const Text("")));
         _list.add(Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
@@ -161,8 +161,8 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
         ));
         _list.add(ListItem(
             message: "项目文档",
-            widget: InkWell(child: Icon(Icons.arrow_forward_ios))));
-        _list.add(SizedBox(
+            widget: const InkWell(child: Icon(Icons.arrow_forward_ios))));
+        _list.add(const SizedBox(
           height: 30,
         ));
         _list.add(
@@ -191,15 +191,15 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
                   Navigator.pop(context);
                 }
               },
-              shape: StadiumBorder(side: BorderSide.none),
+              shape: const StadiumBorder(side: BorderSide.none),
               color: Colors.red.withOpacity(0.8),
-              child: Text(
+              child: const Text(
                 '拒绝',
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: transferWidth(MediaQuery.of(context).size.width / 3),
             height: transferlength(45),
             child: RaisedButton(
@@ -208,16 +208,16 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
                     context, "/admin/manage/project/choose-lawer",
                     arguments: {"id": widget.arguments['id']});
               },
-              shape: StadiumBorder(side: BorderSide.none),
+              shape: const StadiumBorder(side: BorderSide.none),
               color: Colors.green.withOpacity(0.7),
-              child: Text(
+              child: const Text(
                 '同意申请',
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ),
           )
         ]));
-        _list.add(SizedBox(
+        _list.add(const SizedBox(
           height: 30,
         ));
       });
@@ -229,7 +229,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
     _getDetail();
     return Scaffold(
         appBar: AppBar(
-          title: Text("项目详情"),
+          title: const Text("项目详情"),
           backgroundColor: Colors.orange.withOpacity(0.5),
         ),
         body: ListView.builder(
@@ -246,20 +246,20 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
+          title: const Text('提示'),
+          content: Text(message),
           actions: <Widget>[
             FlatButton(
               color: Colors.grey,
               highlightColor: Colors.blue[700],
               colorBrightness: Brightness.dark,
               splashColor: Colors.grey,
-              child: Text("确定"),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text("确定"),
             ),
           ],
         );

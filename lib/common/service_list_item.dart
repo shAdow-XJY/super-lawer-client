@@ -17,7 +17,7 @@ class ServiceListItem extends StatelessWidget {
             child: ListTile(
               title: Text(
                 message,
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
               trailing: widget,
             ),

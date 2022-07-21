@@ -5,6 +5,8 @@ import 'package:super_lawer/common/loading_diglog.dart';
 import 'package:super_lawer/model/response.dart';
 import 'package:super_lawer/service/login_service.dart';
 
+import '../../common/show_message_dialog.dart';
+
 class ForgetPwdPage extends StatefulWidget {
   @override
   _ForgetPwdPage createState() => _ForgetPwdPage();
@@ -21,32 +23,6 @@ class _ForgetPwdPage extends State<ForgetPwdPage> {
   String _passport = '';
   String _code = '';
 
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -87,7 +63,7 @@ class _ForgetPwdPage extends State<ForgetPwdPage> {
           });
       RResponse response = await LoginService.forgetPwd(passport: _passport);
       Navigator.pop(context);
-      _showMessageDialog(response.message);
+      showMessageDialog(response.message,context);
       if (response.code != 1) return;
       setState(() {
         isButtonEnable = false; //按钮状态标记
@@ -108,7 +84,7 @@ class _ForgetPwdPage extends State<ForgetPwdPage> {
           await LoginService.checkCode(passport: _passport, checkCode: _code);
       Navigator.pop(context);
       if (rResponse.code != 1) {
-        _showMessageDialog(rResponse.message);
+        showMessageDialog(rResponse.message,context);
       } else {
         Navigator.pushNamed(context, "/forget/pwd/change",
             arguments: {"passport": _passport});

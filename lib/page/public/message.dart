@@ -16,7 +16,7 @@ class _MessagePageState extends State<MessagePage> {
   @override
   void initState() {
     super.initState();
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 10,
     ));
     _list.add(_ListItem(
@@ -36,7 +36,7 @@ class _MessagePageState extends State<MessagePage> {
     RResponse rResponse = await MessageService.listContacts();
     if (rResponse.code == 1) {
       _list.removeRange(2, _list.length);
-      this.setState(() {
+      setState(() {
         for (var item in rResponse.data['contacts']) {
           _list.add(_ListItem(
             cover: item['cover'],
@@ -59,9 +59,9 @@ class _MessagePageState extends State<MessagePage> {
     getContacts();
     return Scaffold(
         appBar: AppBar(
-          title: Text("超级律师"),
+          title: const Text("超级律师"),
           backgroundColor: Colors.orange.withOpacity(0.6),
-          actions: [
+          actions: const [
             Icon(
               Icons.more_vert,
               size: 30,
@@ -112,18 +112,18 @@ class _ListItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
             ),
             subtitle: Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
                 subtitle,
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
             ),
           ),
-          Divider()
+          const Divider()
         ],
       ),
     );

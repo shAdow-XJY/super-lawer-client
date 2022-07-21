@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import '../../common/loading_diglog.dart';
+import '../../common/show_message_dialog.dart';
 import '../../model/response.dart';
 import '../../service/file_service.dart';
 import '../../service/user_service.dart';
@@ -18,33 +19,6 @@ class ApplyEnterprise extends StatefulWidget {
 
 class _ApplyEnterpriseState extends State<ApplyEnterprise> {
   late RResponse response;
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   /*
   *企业申请认证页
@@ -73,7 +47,7 @@ class _ApplyEnterpriseState extends State<ApplyEnterprise> {
 
   onsubmit() async {
     if (_eVisible) {
-      _showMessageDialog("企业营业执照不允许为空");
+      showMessageDialog("企业营业执照不允许为空",context);
       return;
     }
     final form = _formKey.currentState;
@@ -83,14 +57,14 @@ class _ApplyEnterpriseState extends State<ApplyEnterprise> {
       RResponse rResponse = await FileService.uploadFile(_EImage.path);
       if (rResponse.code != 1) {
         Navigator.pop(context);
-        _showMessageDialog("文件上传发生错误,请重试");
+        showMessageDialog("文件上传发生错误,请重试",context);
         return;
       }
       rResponse = await UserService.authEnterpeise(rResponse.data['url'],
           enterprise_name, enterprise_add, institution_code);
       if (rResponse.code != 1) {
         Navigator.pop(context);
-        _showMessageDialog("认证失败,请重试");
+        showMessageDialog("认证失败,请重试",context);
         return;
       }
       Navigator.pop(context);

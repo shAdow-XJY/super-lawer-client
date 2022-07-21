@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import '../../common/loading_diglog.dart';
+import '../../common/show_message_dialog.dart';
 import '../../model/response.dart';
 import '../../service/file_service.dart';
 import '../../service/user_service.dart';
@@ -19,33 +20,6 @@ class ApplyLawer extends StatefulWidget {
 class _ApplyLawerState extends State<ApplyLawer> {
   late RResponse response;
 
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   /*
   *律师申请认证页
   */
@@ -58,7 +32,7 @@ class _ApplyLawerState extends State<ApplyLawer> {
   String degree = '未接受教育';
   int sex = 0;
   // 提交
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String id_number = '';
   String real_name = '';
 
@@ -104,21 +78,23 @@ class _ApplyLawerState extends State<ApplyLawer> {
   }
 
   onsubmit() async {
+    final form = _formKey.currentState;
+    form?.save();
+
     if (_lVisible1) {
-      _showMessageDialog("身份证正面不允许为空");
+      showMessageDialog("身份证正面不允许为空",context);
       return;
     }
     if (_lVisible2) {
-      _showMessageDialog("身份证反面不允许为空");
+      showMessageDialog("身份证反面不允许为空",context);
       return;
     }
     if (_lVisible3) {
-      _showMessageDialog("执业资格证不允许为空");
+      showMessageDialog("执业资格证不允许为空",context);
       return;
     }
-    final form = _formKey.currentState;
+
     if (form!.validate()) {
-      form.save();
       showDialog(context: context, builder: (context) => LoadingDialog());
       //todo
       // TODO: 上传速度过慢,有时间改成并行化操作
@@ -128,7 +104,7 @@ class _ApplyLawerState extends State<ApplyLawer> {
 
       if (r1.code != 1 || r2.code != 1 || r3.code != 1) {
         Navigator.pop(context);
-        _showMessageDialog("文件上传失败,请重试");
+        showMessageDialog("文件上传失败,请重试",context);
         return;
       }
       RResponse rResponse = await UserService.authlawer(
@@ -152,7 +128,7 @@ class _ApplyLawerState extends State<ApplyLawer> {
             fontSize: 17.0);
         Navigator.popAndPushNamed(context, "/auth");
       } else {
-        _showMessageDialog("认证申请失败,请重试");
+        showMessageDialog("认证申请失败,请重试",context);
       }
     }
   }
