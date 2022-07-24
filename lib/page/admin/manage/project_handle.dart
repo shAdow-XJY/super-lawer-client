@@ -5,6 +5,8 @@ import 'package:super_lawer/service/enterpeise_service.dart';
 import 'package:super_lawer/util/date_util.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../../common/loading_diglog.dart';
+
 class ProjectHandleListPage extends StatefulWidget {
   const ProjectHandleListPage({Key? key}) : super(key: key);
 
@@ -15,20 +17,26 @@ class ProjectHandleListPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectHandleListPage> {
   List<Widget> _list = [];
 
+  bool loading = true;
+
   @override
   void initState() {
     super.initState();
     getProjectData();
-    _list.add(SizedBox(
-      height: 10,
-    ));
   }
 
   getProjectData() async {
+    setState(() {
+      debugPrint("startloading");
+      loading = true;
+    });
+    _list.add(const SizedBox(
+      height: 10,
+    ));
     RResponse rResponse = await AdminService.listProject();
     if (rResponse.code == 1) {
-      this.setState(() {
-        _list.removeRange(1, _list.length);
+      setState(() {
+        _list = [];
         for (var item in rResponse.data['projects']) {
           _list.add(_ListItem(
             person: item['from_name'],
@@ -36,25 +44,31 @@ class _ProjectPageState extends State<ProjectHandleListPage> {
             subtitle: transferTimeStamp(item['commit_time'].toString()),
             callback: () {
               Navigator.pushNamed(context, '/admin/manage/project/detail',
-                  arguments: {"id": item['project_id']});
+                  arguments: {"id": item['project_id']}
+              ).then((value) => {getProjectData()});
             },
           ));
         }
+      });
+      setState(() {
+        debugPrint("endlloading");
+        loading = false;
+        _list;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    getProjectData();
     return Scaffold(
         appBar: AppBar(
-          title: Text("项目审核"),
-          backgroundColor: Colors.orange.withOpacity(0.5),
+          title: const Text("项目审核"),
+          backgroundColor: Colors.orange,
         ),
-        body: ListView.builder(
-            itemCount: _list
-                .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
+        body: loading
+            ?LoadingDialog()
+            :ListView.builder(
+            itemCount: _list.length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
             itemBuilder: (content, index) {
               return _list[index];
             }));
@@ -81,20 +95,20 @@ class _ListItem extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.circle,
               size: 30,
             ),
             title: Text(
               title,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             subtitle: Text(
-              "申请人:" + person + "    申请时间: " + subtitle,
-              style: TextStyle(fontSize: 15),
+              "申请人:$person    申请时间: $subtitle",
+              style: const TextStyle(fontSize: 15),
             ),
           ),
-          Divider()
+          const Divider()
         ],
       ),
     );

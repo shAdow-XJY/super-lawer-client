@@ -67,14 +67,13 @@ class _AuthManagePageState extends State<AuthManagePage> {
         title: const Text(
           "认证管理",
         ),
-        backgroundColor: Colors.orange.withOpacity(0.3),
+        backgroundColor: Colors.orange,
         centerTitle: true,
       ),
       body: loading
           ?LoadingDialog()
           :ListView.builder(
-          itemCount: _list
-              .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
+          itemCount: _list.length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
           itemBuilder: (content, index) {
             return _list[index];
           }),

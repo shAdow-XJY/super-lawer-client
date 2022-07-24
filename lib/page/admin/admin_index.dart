@@ -25,12 +25,17 @@ class _AdminIndexState extends State<AdminIndexPage> {
     });
     print(widget.arguments);
     _pageList.addAll(
-        [AdminBussinesspage(), AdminMyPage(userInfo: widget.arguments)]);
+        [const AdminBussinesspage(), AdminMyPage(userInfo: widget.arguments)]);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("超级律师"),
+        centerTitle: true,
+        backgroundColor: Colors.orange,
+      ),
       body: _pageList[_currntIndex],
       bottomNavigationBar: BottomNavigationBar(
           onTap: _onTabClick,
@@ -47,15 +52,15 @@ class _AdminIndexState extends State<AdminIndexPage> {
         child: Image.asset("assets/images/public/index/${key}_active.png",
             width: 32, height: 32, fit: BoxFit.cover),
       ),
-      label: "$value",
+      label: value,
       icon: Image.asset("assets/images/public/index/$key.png",
           width: 32, height: 32, fit: BoxFit.cover),
     );
   }
 
   void _onTabClick(int value) {
-    this.setState(() {
-      this._currntIndex = value;
+    setState(() {
+      _currntIndex = value;
     });
   }
 }

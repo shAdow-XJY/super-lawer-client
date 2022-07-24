@@ -28,7 +28,7 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
     if (rResponse.code == 1) {
       _lawerData = [];
       for (var item in rResponse.data['lawers']) {
-        this.setState(() {
+        setState(() {
           _lawerData.add(_LawerItem(item['id'], item['nickname']));
         });
       }
@@ -40,19 +40,19 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
     _getLawerData();
     return Scaffold(
         appBar: AppBar(
-          title: Text("律师分配"),
-          backgroundColor: Colors.orange.withOpacity(0.5),
+          title: const Text("律师分配"),
+          backgroundColor: Colors.orange,
         ),
         body: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "请为此项目分配律师,目前律所拥有的律师如下列表所示:",
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Column(
@@ -93,9 +93,9 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
                     Navigator.pop(context);
                   }
                 },
-                shape: StadiumBorder(side: BorderSide.none),
+                shape: const StadiumBorder(side: BorderSide.none),
                 color: Colors.orange,
-                child: Text(
+                child: const Text(
                   '确认分配',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
@@ -111,20 +111,20 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
+          title: const Text('提示'),
+          content: Text(message),
           actions: <Widget>[
             FlatButton(
               color: Colors.grey,
               highlightColor: Colors.blue[700],
               colorBrightness: Brightness.dark,
               splashColor: Colors.grey,
-              child: Text("确定"),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text("确定"),
             ),
           ],
         );
@@ -140,13 +140,13 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
             groupValue: _lawerId,
             activeColor: Colors.orange,
             onChanged: (value) {
-              this.setState(() {
+              setState(() {
                 _lawerId = value as int;
               });
             }),
         Text(
           serviceName,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
       ],
     );

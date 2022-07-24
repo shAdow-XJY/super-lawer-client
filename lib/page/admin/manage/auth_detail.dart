@@ -67,7 +67,7 @@ class _AuthPageState extends State<AuthDetailPage> {
         return Scaffold(
           appBar: AppBar(
             title: const Text("认证详情"),
-            backgroundColor: Colors.orange.withOpacity(0.3),
+            backgroundColor: Colors.orange,
           ),
         );
     }
@@ -237,7 +237,7 @@ class _AuthPageState extends State<AuthDetailPage> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange.withOpacity(0.5),
+          backgroundColor: Colors.orange,
           brightness: Brightness.light,
           title: const Text('认证信息'),
         ),
@@ -369,7 +369,7 @@ class _AuthPageState extends State<AuthDetailPage> {
     ]));
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange.withOpacity(0.3),
+          backgroundColor: Colors.orange,
           brightness: Brightness.light,
           title: const Text('认证信息'),
         ),

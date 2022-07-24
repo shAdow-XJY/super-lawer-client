@@ -25,7 +25,7 @@ import 'package:super_lawer/page/public/sys_msg.dart';
 final routes = {
   // 前面是自己的命名 后面是加载的方法
   '/': (context) => LoginPage(), //不用传参的写法
-  '/enterprise/project/create': (context) => CreateProjectPage(),
+  '/enterprise/project/create': (context) => const CreateProjectPage(),
   '/enterprise/project/detail': (context, {arguments}) => ProjectDetailPage(
         arguments: arguments,
       ),
@@ -34,7 +34,7 @@ final routes = {
       ),
 
   '/regisster': (context) => RegisterPage(),
-  '/auth': (context) => AuthPage(),
+  '/auth': (context) => const AuthPage(),
 
   '/msg/chat': (context, {arguments}) => OverdueUrgeReplyPage(
         arguments: arguments,
@@ -44,20 +44,20 @@ final routes = {
   '/admin/index': (context, {arguments}) => AdminIndexPage(
         arguments: arguments,
       ),
-  '/admin/manage/auth': (context) => AuthManagePage(),
+  '/admin/manage/auth': (context) => const AuthManagePage(),
   '/admin/manage/auth/detail': (context, {arguments}) => AuthDetailPage(
         arguments: arguments,
       ),
-  '/admin/manage/project': (context) => ProjectHandleListPage(),
+  '/admin/manage/project': (context) => const ProjectHandleListPage(),
   '/admin/manage/project/detail': (context, {arguments}) =>
       ProjectDetailHanlePage(arguments: arguments),
   '/admin/manage/project/choose-lawer': (context, {arguments}) =>
       ChooseLawerPage(arguments: arguments),
-  '/admin/manage/project/fee-list': (context) => ProjectFeeHandleListPage(),
+  '/admin/manage/project/fee-list': (context) => const ProjectFeeHandleListPage(),
   '/admin/manage/project/fee-detail': (context, {arguments}) =>
       FeeDetailPage(arguments: arguments),
 
-  '/personal/info': (context) => PersonalInfoPage(),
+  '/personal/info': (context) => const PersonalInfoPage(),
 
   '/forget/pwd': (context) => ForgetPwdPage(),
   '/forget/pwd/change': (context, {arguments}) =>

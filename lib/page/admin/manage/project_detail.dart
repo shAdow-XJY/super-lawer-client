@@ -230,7 +230,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("项目详情"),
-          backgroundColor: Colors.orange.withOpacity(0.5),
+          backgroundColor: Colors.orange,
         ),
         body: ListView.builder(
             itemCount: _list
