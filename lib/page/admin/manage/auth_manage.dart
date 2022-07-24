@@ -29,9 +29,6 @@ class _AuthManagePageState extends State<AuthManagePage> {
       debugPrint("startloading");
       loading = true;
     });
-    _list.add(const SizedBox(
-      height: 10,
-    ));
     RResponse rResponse = await AdminService.getAuthList();
     if (rResponse.code == 1) {
       List<dynamic> list = rResponse.data['authers'];

@@ -27,13 +27,10 @@ class _ProjectPageState extends State<ProjectFeeHandleListPage> {
       debugPrint("startloading");
       loading = true;
     });
-    _list.add(const SizedBox(
-      height: 10,
-    ));
     RResponse rResponse = await AdminService.listFeeList();
     if (rResponse.code == 1) {
       setState(() {
-        _list.removeRange(1, _list.length);
+        _list = [];
         for (var item in rResponse.data['projects']) {
           _list.add(_ListItem(
             person: item['from_name'],

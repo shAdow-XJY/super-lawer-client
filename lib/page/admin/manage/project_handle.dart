@@ -30,9 +30,6 @@ class _ProjectPageState extends State<ProjectHandleListPage> {
       debugPrint("startloading");
       loading = true;
     });
-    _list.add(const SizedBox(
-      height: 10,
-    ));
     RResponse rResponse = await AdminService.listProject();
     if (rResponse.code == 1) {
       setState(() {

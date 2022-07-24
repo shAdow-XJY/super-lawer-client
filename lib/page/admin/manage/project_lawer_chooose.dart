@@ -5,6 +5,8 @@ import 'package:super_lawer/model/response.dart';
 import 'package:super_lawer/service/admin_service.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../../common/show_message_dialog.dart';
+
 class ChooseLawerPage extends StatefulWidget {
   final Map arguments;
   ChooseLawerPage({Key? key, required this.arguments}) : super(key: key);
@@ -70,7 +72,7 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
               child: RaisedButton(
                 onPressed: () async {
                   if (_lawerId == -1) {
-                    _showMessageDialog("请选择项目律师");
+                    showMessageDialog("请选择项目律师",context);
                     return;
                   }
                   showDialog(
@@ -79,7 +81,7 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
                       widget.arguments['id'], true, _lawerId);
                   Navigator.pop(context);
                   if (rResponse.code != 1) {
-                    _showMessageDialog("处理失败,请重试");
+                    showMessageDialog("处理失败,请重试",context);
                   } else {
                     Fluttertoast.showToast(
                         msg: "处理成功",
@@ -103,33 +105,6 @@ class _ChooseLawerState extends State<ChooseLawerPage> {
             )
           ],
         ));
-  }
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   _LawerItem(int id, String serviceName) {

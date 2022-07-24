@@ -21,6 +21,8 @@ import 'package:super_lawer/model/response.dart';
 import 'package:super_lawer/service/admin_Service.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../../common/show_message_dialog.dart';
+
 class AuthDetailPage extends StatefulWidget {
   Map arguments;
 
@@ -71,33 +73,6 @@ class _AuthPageState extends State<AuthDetailPage> {
           ),
         );
     }
-  }
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   _LawerWidget() {
@@ -181,7 +156,7 @@ class _AuthPageState extends State<AuthDetailPage> {
                 "lawer", widget.arguments['id'], 0);
             Navigator.pop(context);
             if (rResponse.code != 1) {
-              _showMessageDialog("处理失败,请重试");
+              showMessageDialog("处理失败,请重试",context);
             } else {
               Fluttertoast.showToast(
                   msg: "处理成功",
@@ -212,7 +187,7 @@ class _AuthPageState extends State<AuthDetailPage> {
                 "lawer", widget.arguments['id'], 1);
             Navigator.pop(context);
             if (rResponse.code != 1) {
-              _showMessageDialog("处理失败,请重试");
+              showMessageDialog("处理失败,请重试",context);
             } else {
               Fluttertoast.showToast(
                   msg: "处理成功",
@@ -314,7 +289,7 @@ class _AuthPageState extends State<AuthDetailPage> {
                 "enterprise", widget.arguments['id'], 0);
             Navigator.pop(context);
             if (rResponse.code != 1) {
-              _showMessageDialog("处理失败,请重试");
+              showMessageDialog("处理失败,请重试",context);
             } else {
               Fluttertoast.showToast(
                   msg: "处理成功",
@@ -345,7 +320,7 @@ class _AuthPageState extends State<AuthDetailPage> {
                 "enterprise", widget.arguments['id'], 1);
             Navigator.pop(context);
             if (rResponse.code != 1) {
-              _showMessageDialog("处理失败,请重试");
+              showMessageDialog("处理失败,请重试",context);
             } else {
               Fluttertoast.showToast(
                   msg: "处理成功",

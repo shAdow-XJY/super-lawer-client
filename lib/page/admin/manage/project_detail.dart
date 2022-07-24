@@ -12,6 +12,8 @@ import 'package:super_lawer/service/enterpeise_service.dart';
 import 'package:super_lawer/util/date_util.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../../common/show_message_dialog.dart';
+
 class ProjectDetailHanlePage extends StatefulWidget {
   ProjectDetailHanlePage({Key? key, required this.arguments}) : super(key: key);
   Map arguments;
@@ -88,6 +90,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
               onTap: () {
                 setState(() {
                   _show = !_show;
+                  _getDetail();
                 });
               },
               child: Icon(
@@ -128,21 +131,6 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
                   ),
                 ],
               ));
-        String status = "管理审核中";
-        switch (r['status']) {
-          case -1:
-            status = "已拒绝";
-            break;
-          case 2:
-            status = "律师审核中";
-            break;
-          case 3:
-            status = "进行中";
-            break;
-          case 4:
-            status = "已结束";
-            break;
-        }
         _list.add(ListItem(message: "项目具体内容", widget: const Text("")));
         _list.add(Padding(
           padding: const EdgeInsets.all(15.0),
@@ -167,7 +155,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
         ));
         _list.add(
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Container(
+          SizedBox(
             width: transferWidth(MediaQuery.of(context).size.width / 3),
             height: transferlength(45),
             child: RaisedButton(
@@ -178,7 +166,7 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
                     widget.arguments['id'], false, 0);
                 Navigator.pop(context);
                 if (rResponse.code != 1) {
-                  _showMessageDialog("处理失败,请重试");
+                  showMessageDialog("处理失败,请重试",context);
                 } else {
                   Fluttertoast.showToast(
                       msg: "处理成功",
@@ -226,7 +214,6 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
 
   @override
   Widget build(BuildContext context) {
-    _getDetail();
     return Scaffold(
         appBar: AppBar(
           title: const Text("项目详情"),
@@ -240,30 +227,4 @@ class _ProjectDetailPageState extends State<ProjectDetailHanlePage> {
             }));
   }
 
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

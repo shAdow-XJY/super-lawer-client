@@ -6,11 +6,12 @@ import 'package:super_lawer/common/service_list_item.dart';
 import 'package:super_lawer/model/response.dart';
 import 'package:super_lawer/page/enterprise/project_%20proposer_detail.dart';
 import 'package:super_lawer/page/enterprise/project_lawer_detail.dart';
-import 'package:super_lawer/service/admin_Service.dart';
 import 'package:super_lawer/service/enterpeise_service.dart';
 import 'package:super_lawer/service/lawer_service.dart';
 import 'package:super_lawer/util/date_util.dart';
 import 'package:super_lawer/util/number_util.dart';
+
+import '../../common/show_message_dialog.dart';
 
 class LawerProjectDetailPage extends StatefulWidget {
   LawerProjectDetailPage({Key? key, required this.arguments}) : super(key: key);
@@ -26,7 +27,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
   @override
   void initState() {
     super.initState();
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 20,
     ));
     _getDetail();
@@ -39,9 +40,9 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
     if (rResponse.code == 1) {
       _list.removeRange(1, _list.length);
       Map r = rResponse.data['proj_detail'];
-      this.setState(() {
+      setState(() {
         _list.add(ListItem(message: "项目名称", widget: Text(r["project_name"])));
-        _list.add(ListItem(message: "项目类型", widget: Text('法律咨询')));
+        _list.add(ListItem(message: "项目类型", widget: const Text('法律咨询')));
         _list.add(ListItem(
           message: "申请人",
           widget: InkWell(
@@ -55,7 +56,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
             child: Text(
               r['from_name'],
               style:
-                  TextStyle(color: Colors.blue, letterSpacing: 3, fontSize: 18),
+                  const TextStyle(color: Colors.blue, letterSpacing: 3, fontSize: 18),
             ),
           ),
         ));
@@ -72,7 +73,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
                   },
                   child: Text(
                     "${r["lawer"]['real_name']}",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.blue, letterSpacing: 3, fontSize: 18),
                   ))));
         }
@@ -86,8 +87,9 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
             message: "服务方案",
             widget: InkWell(
               onTap: () {
-                this.setState(() {
+                setState(() {
                   _show = !_show;
+                  _getDetail();
                 });
               },
               child: Icon(
@@ -105,7 +107,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
                   ServiceListItem(
                     message: "服务等级",
                     widget: Text(
-                      "${r['service']['rank']}",
+                      "${r['service']['level']}",
                     ),
                   ),
                   ServiceListItem(
@@ -144,11 +146,11 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
             break;
         }
         _list.add(ListItem(message: "项目状态", widget: Text(status)));
-        _list.add(ListItem(message: "项目具体内容", widget: Text("")));
+        _list.add(ListItem(message: "项目具体内容", widget: const Text("")));
         _list.add(Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
@@ -163,15 +165,15 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
       });
       _list.add(ListItem(
           message: "项目文档",
-          widget: InkWell(child: Icon(Icons.arrow_forward_ios))));
+          widget: const InkWell(child: Icon(Icons.arrow_forward_ios))));
 
       if (r['status'] == 1) {
-        _list.add(SizedBox(
+        _list.add(const SizedBox(
           height: 20,
         ));
         _list.add(
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Container(
+          SizedBox(
             width: transferWidth(MediaQuery.of(context).size.width / 3),
             height: transferlength(45),
             child: RaisedButton(
@@ -182,7 +184,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
                     await LawerService.handleProject(widget.arguments['id'], 0);
                 Navigator.pop(context);
                 if (rResponse.code != 1) {
-                  _showMessageDialog("处理失败,请重试");
+                  showMessageDialog("处理失败,请重试",context);
                 } else {
                   Fluttertoast.showToast(
                       msg: "处理成功",
@@ -195,15 +197,15 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
                   Navigator.pop(context);
                 }
               },
-              shape: StadiumBorder(side: BorderSide.none),
+              shape: const StadiumBorder(side: BorderSide.none),
               color: Colors.red.withOpacity(0.8),
-              child: Text(
+              child: const Text(
                 '拒绝',
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ),
           ),
-          Container(
+          SizedBox(
             width: transferWidth(MediaQuery.of(context).size.width / 3),
             height: transferlength(45),
             child: RaisedButton(
@@ -214,7 +216,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
                     await LawerService.handleProject(widget.arguments['id'], 1);
                 Navigator.pop(context);
                 if (rResponse.code != 1) {
-                  _showMessageDialog("处理失败,请重试");
+                  showMessageDialog("处理失败,请重试",context);
                 } else {
                   Fluttertoast.showToast(
                       msg: "处理成功",
@@ -227,9 +229,9 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
                   Navigator.pop(context);
                 }
               },
-              shape: StadiumBorder(side: BorderSide.none),
+              shape: const StadiumBorder(side: BorderSide.none),
               color: Colors.green.withOpacity(0.7),
-              child: Text(
+              child: const Text(
                 '同意申请',
                 style: TextStyle(color: Colors.white, fontSize: 15),
               ),
@@ -240,9 +242,9 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
         _list.add(ListItem(
             message: "项目费用", widget: Text("${r["total_money"].toString()}元")));
         _list.add(ListItem(
-            message: "是否支付", widget: Text("${r["is_payment"] ? '是' : '否'}")));
+            message: "是否支付", widget: Text(r["is_payment"] ? '是' : '否')));
         if (r["is_payment"]) {
-          _list.add(ListItem(message: "支付证明", widget: Text("")));
+          _list.add(ListItem(message: "支付证明", widget: const Text("")));
           _list.add(Image.network(
             r['pay_picture_url'],
             width: transferWidth(250),
@@ -256,10 +258,9 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    _getDetail();
     return Scaffold(
         appBar: AppBar(
-          title: Text("项目详情"),
+          title: const Text("项目详情"),
           backgroundColor: Colors.orange.withOpacity(0.5),
         ),
         body: ListView.builder(
@@ -270,30 +271,4 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
             }));
   }
 
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              child: Text("确定"),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

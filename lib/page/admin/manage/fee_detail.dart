@@ -11,6 +11,8 @@ import 'package:super_lawer/service/enterpeise_service.dart';
 import 'package:super_lawer/util/date_util.dart';
 import 'package:super_lawer/util/number_util.dart';
 
+import '../../../common/show_message_dialog.dart';
+
 class FeeDetailPage extends StatefulWidget {
   FeeDetailPage({Key? key, required this.arguments}) : super(key: key);
   Map arguments;
@@ -196,7 +198,7 @@ class _ProjectDetailPageState extends State<FeeDetailPage> {
                       widget.arguments['id'], 0);
                   Navigator.pop(context);
                   if (rResponse.code != 1) {
-                    _showMessageDialog("处理失败,请重试");
+                    showMessageDialog("处理失败,请重试",context);
                   } else {
                     Fluttertoast.showToast(
                         msg: "处理成功",
@@ -228,7 +230,7 @@ class _ProjectDetailPageState extends State<FeeDetailPage> {
                       widget.arguments['id'], 1);
                   Navigator.pop(context);
                   if (rResponse.code != 1) {
-                    _showMessageDialog("处理失败,请重试");
+                    showMessageDialog("处理失败,请重试",context);
                   } else {
                     Fluttertoast.showToast(
                         msg: "处理成功",
@@ -272,32 +274,5 @@ class _ProjectDetailPageState extends State<FeeDetailPage> {
             itemBuilder: (content, index) {
               return _list[index];
             }));
-  }
-
-  void _showMessageDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: const Text('提示'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              color: Colors.grey,
-              highlightColor: Colors.blue[700],
-              colorBrightness: Brightness.dark,
-              splashColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("确定"),
-            ),
-          ],
-        );
-      },
-    );
   }
 }

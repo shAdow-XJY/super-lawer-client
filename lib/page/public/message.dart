@@ -60,23 +60,14 @@ class _MessagePageState extends State<MessagePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("超级律师"),
-          backgroundColor: Colors.orange.withOpacity(0.6),
-          actions: const [
-            Icon(
-              Icons.more_vert,
-              size: 30,
-            ),
-            SizedBox(
-              width: 10,
-            )
-          ],
+          backgroundColor: Colors.orange,
         ),
         body: ListView.builder(
-            itemCount: _list
-                .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
+            itemCount: _list.length,
             itemBuilder: (content, index) {
               return _list[index];
-            }));
+            })
+    );
   }
 }
 
