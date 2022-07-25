@@ -45,20 +45,20 @@ class _ProposerDetailPage extends State<ProposerDetailPage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text('提示'),
-          content: new Text(message),
+          title: const Text('提示'),
+          content: Text(message),
           actions: <Widget>[
             FlatButton(
               color: Colors.grey,
               highlightColor: Colors.blue[700],
               colorBrightness: Brightness.dark,
               splashColor: Colors.grey,
-              child: Text("确定"),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text("确定"),
             ),
           ],
         );
@@ -68,12 +68,12 @@ class _ProposerDetailPage extends State<ProposerDetailPage> {
 
   _EnterpeiseWidget() {
     List<Widget> _list = [];
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 15,
     ));
     _list.add(ListItem(
         message: "申请人类型",
-        widget: Text(
+        widget: const Text(
           "企业",
           style: TextStyle(fontSize: 17),
         )));
@@ -82,46 +82,45 @@ class _ProposerDetailPage extends State<ProposerDetailPage> {
         message: "认证时间",
         widget: Text(
           transferTimeStamp(response.data['auth_time'].toString()),
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
 
     _list.add(ListItem(
         message: "企业名称",
         widget: Text(
           response.data['enterprise_name'],
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "企业地址",
         widget: Text(
           response.data['enterprise_add'],
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
     _list.add(ListItem(
         message: "企业代码",
         widget: Text(
           response.data['institution_code'],
-          style: TextStyle(fontSize: 17),
+          style: const TextStyle(fontSize: 17),
         )));
-    _list.add(ListItem(message: "企业经营执照:", widget: Text("")));
+    _list.add(ListItem(message: "企业经营执照:", widget: const Text("")));
     _list.add(Image.network(
       response.data['business_license'],
       width: transferWidth(250),
       height: transferlength(250),
       fit: BoxFit.contain,
     ));
-    return Container(
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.orange.withOpacity(0.5),
-              brightness: Brightness.light,
-              title: Text('申请人信息'),
-            ),
-            body: ListView.builder(
-                itemCount: _list
-                    .length, //此处展示需要写成 3，实际适用时  _listData==null?0:_listData.length
-                itemBuilder: (content, index) {
-                  return _list[index];
-                })));
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.orange,
+          brightness: Brightness.light,
+          title: const Text('申请人信息'),
+        ),
+        body: ListView.builder(
+            itemCount: _list.length,
+            itemBuilder: (content, index) {
+              return _list[index];
+            })
+    );
   }
 }

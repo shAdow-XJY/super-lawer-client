@@ -31,15 +31,22 @@ class _OverdueUrgeReplyPageState extends State<OverdueUrgeReplyPage> {
   }
 
   initData() async {
-    RResponse rResponse =
-        await MessageService.listMessage(widget.arguments['id']);
+    RResponse rResponse = await MessageService.listMessage(widget.arguments['id']);
     if (rResponse.code == 1) {
-      list = [];
-      setState(() {
+      //print(rResponse.data['msg'].length);
+      if (rResponse.data['msg'].length != list.length){
+        var templist = [];
         for (var item in rResponse.data['msg']) {
-          list.add(item);
+          templist.add(item);
+          //print(item);
         }
-      });
+        if (templist.last['sender_name'] != widget.arguments["contact_name"] && list.isNotEmpty){
+          return;
+        }
+        setState(() {
+          list = templist;
+        });
+      }
     }
   }
 
@@ -175,37 +182,18 @@ class _OverdueUrgeReplyPageState extends State<OverdueUrgeReplyPage> {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Text(
-              transferTimeStamp(item['send_time'].toString()),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFFA1A6BB),
-                fontSize: 14,
-              ),
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.only(left: 15, right: 45),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  alignment: Alignment.center,
-                  width: 30,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                      color: Color(0xFF464EB5),
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                SizedBox(
+                  height: 50,
+                  width: 50,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
-                    child: Text(
-                      item['sender_name'][0],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
+                    padding: const EdgeInsets.all(1.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(item['sender_cover']),
                     ),
                   ),
                 ),
@@ -226,14 +214,6 @@ class _OverdueUrgeReplyPageState extends State<OverdueUrgeReplyPage> {
                       ),
                       Stack(
                         children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(2, 16, 0, 0),
-                            child: const Image(
-                                width: 11,
-                                height: 20,
-                                image: AssetImage(
-                                    "assets/images/public/login/login.png")),
-                          ),
                           Container(
                             decoration: const BoxDecoration(
                                 boxShadow: [
@@ -274,38 +254,29 @@ class _OverdueUrgeReplyPageState extends State<OverdueUrgeReplyPage> {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Text(
-              transferTimeStamp(item['send_time'].toString()),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFFA1A6BB),
-                fontSize: 14,
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(bottom: 20),
+          //   child: Text(
+          //     transferTimeStamp(item['send_time'].toString()),
+          //     textAlign: TextAlign.center,
+          //     style: const TextStyle(
+          //       color: Color(0xFFA1A6BB),
+          //       fontSize: 14,
+          //     ),
+          //   ),
+          // ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             textDirection: TextDirection.rtl,
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(right: 15),
-                alignment: Alignment.center,
-                width: 30,
-                height: 30,
-                decoration: const BoxDecoration(
-                    color: Color(0xFF464EB5),
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
+              SizedBox(
+                height: 50,
+                width: 50,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: Text(
-                    item['sender_name'][0],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                  padding: const EdgeInsets.all(1.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(item['sender_cover']),
                   ),
                 ),
               ),
@@ -326,15 +297,6 @@ class _OverdueUrgeReplyPageState extends State<OverdueUrgeReplyPage> {
                   Stack(
                     alignment: Alignment.topRight,
                     children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 16, 2, 0),
-                        child: const Image(
-                          width: 11,
-                          height: 20,
-                          image: AssetImage(
-                              "assets/images/public/login/login.png"),
-                        ),
-                      ),
                       Row(
                         textDirection: TextDirection.rtl,
                         children: <Widget>[
@@ -389,6 +351,15 @@ class _OverdueUrgeReplyPageState extends State<OverdueUrgeReplyPage> {
     String message = textEditingController.value.text;
     textEditingController.text = '';
     MessageService.sendMsg(widget.arguments['id'], message);
+
+    setState((){
+      list.add({
+        'sender_name': widget.arguments["contact_name"]+'not',
+        "sender_cover": "https://img-blog.csdnimg.cn/cacfeb64e5b942f7b5a1e98d135cd448.png#pic_center",
+        'content': message
+      });
+    });
+
   }
 
   addMessage(content) {

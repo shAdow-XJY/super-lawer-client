@@ -21,7 +21,7 @@ class _MessagePageState extends State<MessagePage> {
     ));
     _list.add(_ListItem(
       cover:
-          "http://www.topgoer.cn/uploads/202009/cover_16326bd0af0aada3_small.jpg",
+          "https://img-blog.csdnimg.cn/1b6ca6c17a5445918b1acdfa4bd651a4.png#pic_center",
       title: "系统消息",
       subtitle: "",
       callback: () {

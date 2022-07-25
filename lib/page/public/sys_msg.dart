@@ -14,7 +14,7 @@ class SysMsgPage extends StatefulWidget {
 }
 
 class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
-  ScrollController _scrollController = ScrollController(); //listview的控制器
+  final ScrollController _scrollController = ScrollController(); //listview的控制器
   late double contentMaxWidth;
   late Timer _timer;
 
@@ -22,7 +22,7 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
   void initState() {
     super.initState();
     initData();
-    _timer = Timer.periodic(Duration(seconds: 10), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       initData();
     });
   }
@@ -30,11 +30,13 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
   initData() async {
     RResponse rResponse = await MessageService.listMessage(1);
     if (rResponse.code == 1) {
-      list = [];
-      for (var item in rResponse.data['msg']) {
-        setState(() {
-          list.add(item);
-        });
+      if (rResponse.data['msg'] != list.length){
+        list = [];
+        for (var item in rResponse.data['msg']) {
+          setState(() {
+            list.add(item);
+          });
+        }
       }
     }
   }
@@ -52,13 +54,13 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.orange.withOpacity(0.5),
-        title: Text("系统消息"),
+        backgroundColor: Colors.orange,
+        title: const Text("系统消息"),
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Color(0xFFF1F5FB),
+        color: const Color(0xFFF1F5FB),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -82,7 +84,7 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
       child: ListView.builder(
         reverse: true,
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: 27),
+        padding: const EdgeInsets.only(top: 27),
         itemBuilder: (context, index) {
           var item = list[index];
           return GestureDetector(
@@ -102,22 +104,22 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
 
   Widget _renderRowSendByOthers(BuildContext context, item) {
     return Container(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
       child: Column(
         children: <Widget>[
           Padding(
+            padding: const EdgeInsets.only(bottom: 20),
             child: Text(
               transferTimeStamp(item['send_time'].toString()),
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xFFA1A6BB),
                 fontSize: 14,
               ),
             ),
-            padding: EdgeInsets.only(bottom: 20),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 15, right: 45),
+            padding: const EdgeInsets.only(left: 15, right: 45),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -125,10 +127,11 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
                   alignment: Alignment.center,
                   width: 30,
                   height: 30,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Color(0xFF464EB5),
                       borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: Padding(
+                  child: const Padding(
+                    padding: EdgeInsets.only(bottom: 2),
                     child: Text(
                       "系统",
                       textAlign: TextAlign.center,
@@ -137,14 +140,14 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
                         fontSize: 14,
                       ),
                     ),
-                    padding: EdgeInsets.only(bottom: 2),
                   ),
                 ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20, right: 30),
                         child: Text(
                           "系统消息",
                           softWrap: true,
@@ -153,20 +156,11 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
                             fontSize: 14,
                           ),
                         ),
-                        padding: EdgeInsets.only(left: 20, right: 30),
                       ),
                       Stack(
                         children: <Widget>[
                           Container(
-                            child: Image(
-                                width: 11,
-                                height: 20,
-                                image: AssetImage(
-                                    "assets/images/public/login/login.png")),
-                            margin: EdgeInsets.fromLTRB(2, 16, 0, 0),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
                                     offset: Offset(4.0, 7.0),
@@ -177,11 +171,11 @@ class _OverdueUrgeReplyPageState extends State<SysMsgPage> {
                                 color: Colors.white,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
-                            margin: EdgeInsets.only(top: 8, left: 10),
-                            padding: EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(top: 8, left: 10),
+                            padding: const EdgeInsets.all(10),
                             child: Text(
                               item['content'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF03073C),
                                 fontSize: 15,
                               ),
