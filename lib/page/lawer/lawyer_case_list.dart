@@ -17,7 +17,7 @@ class _LawerCaseListPageState extends State<LawerCaseListPage> {
 
   List<Widget> _list = [];
 
-  var _titleTxt = new TextEditingController();
+  final _titleTxt = TextEditingController();
   List<String> _typelist = [
     '争议解决',
     '非诉专项',

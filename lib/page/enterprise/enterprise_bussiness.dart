@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:super_lawer/page/enterprise/project_list.dart';
-import 'package:super_lawer/page/public/auth.dart';
+import 'package:super_lawer/page/enterprise/project/project_list.dart';
 
 class EnterpriseBussinessPage extends StatefulWidget {
   const EnterpriseBussinessPage({Key? key}) : super(key: key);
@@ -90,9 +89,9 @@ List<Tab> _tabs = [
   const Tab(
     text: '法律咨询',
   ),
-  const Tab(
-    text: '案件管理',
-  ),
+  // const Tab(
+  //   text: '案件管理',
+  // ),
 ];
-
-List<Widget> _tabContent = [const ProjectListPage(), const AuthPage()];
+List<Widget> _tabContent = [const ProjectListPage()];
+// List<Widget> _tabContent = [const ProjectListPage(), const AuthPage()];

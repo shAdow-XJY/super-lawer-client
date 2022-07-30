@@ -4,14 +4,14 @@ import 'package:super_lawer/common/list_item.dart';
 import 'package:super_lawer/common/loading_diglog.dart';
 import 'package:super_lawer/common/service_list_item.dart';
 import 'package:super_lawer/model/response.dart';
-import 'package:super_lawer/page/enterprise/project_%20proposer_detail.dart';
-import 'package:super_lawer/page/enterprise/project_lawer_detail.dart';
 import 'package:super_lawer/service/enterpeise_service.dart';
 import 'package:super_lawer/service/lawer_service.dart';
 import 'package:super_lawer/util/date_util.dart';
 import 'package:super_lawer/util/number_util.dart';
 
 import '../../common/show_message_dialog.dart';
+import '../enterprise/project/project_ proposer_detail.dart';
+import '../enterprise/project/project_lawer_detail.dart';
 
 class LawerProjectDetailPage extends StatefulWidget {
   LawerProjectDetailPage({Key? key, required this.arguments}) : super(key: key);
@@ -261,7 +261,7 @@ class _ProjectDetailPageState extends State<LawerProjectDetailPage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("项目详情"),
-          backgroundColor: Colors.orange.withOpacity(0.5),
+          backgroundColor: Colors.orange,
         ),
         body: ListView.builder(
             itemCount: _list

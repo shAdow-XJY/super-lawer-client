@@ -30,7 +30,7 @@ class _MyPageState extends State<MyPage> {
     var width = MediaQuery.of(context).size.width;
     return ListView(
       children: [
-        Container(
+        SizedBox(
           height: height / 2.7,
           child: Stack(
             alignment: const AlignmentDirectional(0, 0.2),
@@ -60,12 +60,12 @@ class _MyPageState extends State<MyPage> {
                         child: Stack(
                           children: [
                             Align(
-                                alignment: Alignment.topRight,
+                                alignment: Alignment.centerRight,
                                 child: ClipOval(
                                     child: Image.network(
                                   widget.userInfo["cover"],
-                                  width: transferWidth(80),
-                                  height: transferlength(80),
+                                  width: transferWidth(150),
+                                  height: transferlength(150),
                                   fit: BoxFit.cover,
                                 ))),
                             Align(

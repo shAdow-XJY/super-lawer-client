@@ -17,7 +17,7 @@ class _PersonalInfoPage extends State<PersonalInfoPage> {
   @override
   void initState() {
     super.initState();
-    _list.add(SizedBox(
+    _list.add(const SizedBox(
       height: 20,
     ));
     getInfo();
@@ -27,7 +27,7 @@ class _PersonalInfoPage extends State<PersonalInfoPage> {
     RResponse rResponse = await UserService.getInfo();
     Map r = rResponse.data["basic_info"];
     if (rResponse.code == 1) {
-      this.setState(() {
+      setState(() {
         _list.add(ListItem(
             message: "头像",
             widget: ClipOval(
@@ -53,8 +53,8 @@ class _PersonalInfoPage extends State<PersonalInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("个人信息"),
-          backgroundColor: Colors.orange.withOpacity(0.5),
+          title: const Text("个人信息"),
+          backgroundColor: Colors.orange,
         ),
         body: ListView.builder(
             itemCount: _list

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:super_lawer/page/lawer/lawer_project_list.dart';
-import 'package:super_lawer/page/lawer/lawyer_case_list.dart';
-
-
-
 
 class LawerBussinessPage extends StatefulWidget {
   const LawerBussinessPage({Key? key}) : super(key: key);
@@ -93,9 +89,9 @@ List<Tab> _tabs = [
   const Tab(
     text: '法律咨询',
   ),
-  const Tab(
-    text: '案件管理',
-  ),
+  // const Tab(
+  //   text: '案件管理',
+  // ),
 ];
-
-List<Widget> _tabContent = [const LawerProjectListPage(), const LawerCaseListPage()];
+List<Widget> _tabContent = [const LawerProjectListPage()];
+// List<Widget> _tabContent = [const LawerProjectListPage(), const LawerCaseListPage()];
